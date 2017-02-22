@@ -11,9 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
 )
 
+string(ASCII 27 ESCAPE)
 # download mathgl
 message(STATUS "${ESCAPE}[1;36mGet MathGL${ESCAPE}[m")
-string(ASCII 27 ESCAPE)
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/mathgl-2.3.5.1.tar.gz")
   message(STATUS "${ESCAPE}[1;36mThe mathgl download exists allready no need to download.${ESCAPE}[m")
 else()
@@ -28,9 +28,23 @@ else()
   execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf mathgl-2.3.5.1.tar.gz WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
   # rename
   execute_process(COMMAND ${CMAKE_COMMAND} -E rename mathgl-2.3.5.1  mathgl WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
-  # rename
+  # edit CMakeLists.txt
+  execute_process(COMMAND sed -i "7 i SET(enable-gif ON)"                  mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
+  execute_process(COMMAND sed -i "7 i SET(enable-pthr-widget ON)"          mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
+  execute_process(COMMAND sed -i "7 i SET(enable-qt5 ON)"                  mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
+  execute_process(COMMAND sed -i "7 i SET(enable-fltk ON)"                 mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
+  execute_process(COMMAND sed -i "7 i SET(MGL_HAVE_C99_COMPLEX 0)"         mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
+  execute_process(COMMAND sed -i "7 i SET(MGL_HAVE_TYPEOF 0)"              mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
   execute_process(COMMAND sed -i "s/unset(MGL_HAVE_TYPEOF CACHE)/#unset(MGL_HAVE_TYPEOF CACHE)/g" mathgl/CMakeLists.txt WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 
- endif()
+  
+
+
+
+
+
+
+
+endif()
 
 
 ## System dependencies are found with CMake's conventions
