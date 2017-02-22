@@ -12,8 +12,6 @@ sudo apt-get install \
 ```
 
 ### Compile Options
-Deactivate the command ```unset(MGL_HAVE_TYPEOF CACHE)``` at line 264 in mathgl/CMakeLists.txt o that it looks like a ```#unset(MGL_HAVE_TYPEOF CACHE``` 
-
 ```bash
 catkin_make \
   -Denable-gif=ON \
