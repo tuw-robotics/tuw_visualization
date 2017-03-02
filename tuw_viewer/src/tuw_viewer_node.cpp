@@ -34,7 +34,7 @@ ViewerNode::ViewerNode ( ros::NodeHandle & n )
     viewsPtr_->SetWnd ( &gr );	// pass window pointer to yours class
     viewsPtr_->Run();	// run calculations
     
-    ros::Rate rate ( 10 );
+    ros::Rate rate ( 5 );
         
     while ( ros::ok() ) {
 
