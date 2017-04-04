@@ -16,7 +16,7 @@ int main ( int argc, char **argv ) {
  **/
 ViewerNode::ViewerNode ( ros::NodeHandle & n )
     : n_ ( n ),
-      n_param_ ( "~" ) {
+      n_param_ ( "~" ){
 
     /// subscribes to  odometry values
     sub_cmd_ = n.subscribe ( "cmd", 1, &ViewerNode::callbackCmd, this );
@@ -29,13 +29,11 @@ ViewerNode::ViewerNode ( ros::NodeHandle & n )
 	
     
     viewsPtr_ = std::make_shared<tuw::Views>();
-    mglFLTK gr ( viewsPtr_.get(),"Multi-threading test" );	// create window
+    mglFLTK gr(viewsPtr_.get(),"Multi-threading test");
+    viewsPtr_->SetWnd ( &gr );// pass window pointer to yours class
     gr.RunThr();
-    viewsPtr_->SetWnd ( &gr );	// pass window pointer to yours class
-    viewsPtr_->Run();	// run calculations
+    ros::Rate rate ( 10 );
     
-    ros::Rate rate ( 5 );
-        
     while ( ros::ok() ) {
 
         /// calls all callbacks waiting in the queue
@@ -43,7 +41,7 @@ ViewerNode::ViewerNode ( ros::NodeHandle & n )
 
         /// sleep for the time remaining to let us hit our publish rate
         rate.sleep();
-	gr.Update();
+	((Fl_MGLView*)(gr.Widget()))->update();
     }
 }
 
@@ -53,7 +51,6 @@ ViewerNode::ViewerNode ( ros::NodeHandle & n )
  * @param laser
  **/
 void ViewerNode::callbackLaser ( const sensor_msgs::LaserScan &_laser ) {
-  ROS_INFO("callbackLaser");
     int nr = ( _laser.angle_max - _laser.angle_min ) / _laser.angle_increment;
     viewsPtr_->laser[0].Create ( nr );
     viewsPtr_->laser[1].Create ( nr );

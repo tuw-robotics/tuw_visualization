@@ -4,6 +4,8 @@
 #include <mgl2/mgl.h>
 #include <mgl2/wnd.h>
 #include <mgl2/fltk.h>
+#include <mgl2/qt.h>
+#include <mgl2/Fl_MathGL.h>
 
 namespace tuw
 {
@@ -52,14 +54,17 @@ public:
         return 0;
     }
     void Calc() {
-        for ( i=0;; i++ ) {	// do calculation
-            //long_calculations();// which can be very long
-            Check();	// check if need pause
-            pnt.Set ( 2*mgl_rnd()-1,2*mgl_rnd()-1 );
-            if ( wnd )	{
-                wnd->Update();
-            }
-        }
+//         for ( i=0;; i++ ) {	// do calculation
+//             //long_calculations();// which can be very long
+//             Check();	// check if need pause
+//             pnt.Set ( 2*mgl_rnd()-1,2*mgl_rnd()-1 );
+//             if ( wnd )	{
+//                 wnd->Update();
+//             }
+//         }
+        if ( wnd )	{
+	    wnd->Update();
+	}
     }
 };
 };
